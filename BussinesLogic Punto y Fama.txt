@@ -1,0 +1,14 @@
+Punto y Fama
+
+Regla del juego
+
+1.Adivinar un digito de 4 digitos generado aleatoriamente
+2.si uno de los digitos del numero digitado por el usuario es adivinado pero no esta en la posicion correcta devolver p
+3.Si uno de los digitos del numero digitado por el usuario es adivinado y esta en la posicion correcta devolver f
+4.El juego debe tener hasta 10 intentos
+5.Para ganar el juego debes acumalar 4 F
+6.El numero digitado tiene que tener todos los digitos diferentes.
+
+
+Opcional:
+Mostrar el tiempo que tiene el juego 
