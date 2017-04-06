@@ -21,7 +21,8 @@ int main()
 
 	string input("");
 	int random_number, option,scores = 0;
-	int tries = 10;
+	int tries = 0;
+	bool run = true;
 
 	//Generating the random number
 	random_number = GenerateRandomNumber();
@@ -45,7 +46,7 @@ int main()
 			else if (result == "FFFF") 
 			{
 				std::cout << "FELICIDADES GANASTE !!!" << endl;
-				tries = 0;				
+				run = false;
 			}
 			else
 			{
@@ -56,14 +57,14 @@ int main()
 		}
 		else
 		{
-			tries--;
+			tries++;
 			cout << "" << endl;
 			cout << "La entrada no es correcta . Verifique e intente nuevamente" << std::endl;
 			Sleep(2000);
 			system("cls");
 		}
 
-	} while (tries > 1);
+	} while (run);
 
 
 	
@@ -79,7 +80,7 @@ int GenerateRandomNumber()
 	std::srand(unsigned(std::time(0)));
 	std::vector<int> rangeNumbers;
 
-	for (int i = 1; i <= 10; i++){rangeNumbers.push_back(i); }
+	for (int i = 1; i < 10; i++){rangeNumbers.push_back(i); }
 
 	// using built-in random generator:
 	std::random_shuffle(rangeNumbers.begin(), rangeNumbers.end());
@@ -95,28 +96,24 @@ int GenerateRandomNumber()
 
 bool IsValidUserInput(string input)
 {
+	if (input.length() > 4) return false;
 	
-	int value = atoi(input.c_str());
-
-	if (value == 0)
+	if (atoi(input.c_str()) == 0)
 		return false;
 
-
-	if (value >= 1000 && value <= 99999)
+	for (int i = 0; i < input.size(); i++)
 	{
-		int digit1, digit2, digit3, digit4 = 0;
-		digit1 = value / 1000;
-		digit2 = (value % 1000) / 100;
-		digit3 = (value % 1000) / 10;
-		digit4 = (value % 10);
-		if (digit1 != digit2 && digit1 != digit3 && digit1 != digit4 &&
-		    digit2 != digit3 && digit2 != digit4 &&
-			digit3 != digit4 )
-			return true;
+		
+		for (int x = i+1; x < input.size(); x++)
+		{
+			if (input.at(i) == input.at(x))
+				return false;
+		}
 	}
+	
 
 
-	return false;
+	return true;
 }
 
 string GameLogic(int n1, int n2)
