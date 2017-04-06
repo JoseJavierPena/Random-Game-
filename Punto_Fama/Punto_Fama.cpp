@@ -51,7 +51,7 @@ int main()
 			else
 			{
 				tries++;
-				std::cout << result <<" tienes "<<tries<<" intentos "<<endl;
+				std::cout << result <<" tienes "<<tries<<" intentos "<<" de 10"<<endl;
 			}			
 
 		}
@@ -96,7 +96,7 @@ int GenerateRandomNumber()
 
 bool IsValidUserInput(string input)
 {
-	if (input.length() > 4) return false;
+	if (input.length() != 4 ) return false;
 	
 	if (atoi(input.c_str()) == 0)
 		return false;
