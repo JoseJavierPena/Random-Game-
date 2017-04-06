@@ -13,7 +13,7 @@ using namespace std;
 
 int GenerateRandomNumber();
 bool IsValidUserInput(string input);
-char ContaintsDigits(int n1, int  n2);
+string GameLogic(int n1, int  n2);
 
 
 int main()
@@ -38,31 +38,20 @@ int main()
 		if (IsValidUserInput(input)) 
 		{
 			
-			auto result = ContaintsDigits(random_number, stoi(input));
-			if (result == 'A')
+			auto result = GameLogic(random_number, atoi(input.c_str()));
+			if (result.length() == 0)
+				std::cout << "FALLASTE!" << endl;
+
+			else if (result == "FFFF") 
 			{
-				cout << "ADIVINASTE!!!!!!!" << std::endl;
-				Sleep(2000);
-				system("cls");
-				random_number = GenerateRandomNumber();
-				tries = 0;
-				
-			}else if( result == 'N')
-			{
-				cout << "FALLASTE" << endl;
-				tries--;
+				std::cout << "FELICIDADES GANASTE !!!" << endl;
+				tries = 0;				
 			}
-			else if (result == 'P') 
+			else
 			{
-				cout << "P" << endl;
-				tries--;
-			}
-			else if(result == 'F')
-			{
-				cout << "F" << endl;
-				scores++;
-			}
-			
+				tries++;
+				std::cout << result <<" tienes "<<tries<<" intentos "<<endl;
+			}			
 
 		}
 		else
@@ -90,7 +79,7 @@ int GenerateRandomNumber()
 	std::srand(unsigned(std::time(0)));
 	std::vector<int> rangeNumbers;
 
-	for (int i = 1; i <= 4; i++){rangeNumbers.push_back(i); }
+	for (int i = 1; i <= 10; i++){rangeNumbers.push_back(i); }
 
 	// using built-in random generator:
 	std::random_shuffle(rangeNumbers.begin(), rangeNumbers.end());
@@ -130,39 +119,28 @@ bool IsValidUserInput(string input)
 	return false;
 }
 
-char ContaintsDigits(int n1, int n2)
+string GameLogic(int n1, int n2)
 {
-	//Returing A if all digits are equal
-	if (n1 == n2)
-	{
-		return 'A';
-	}
-
-	string randomNumber = std::to_string(n1);
+	string random_number = std::to_string(n1);
 	string input = std::to_string(n2);
-	int index = 0;
-	int found = 0;
-  
-	for (int i = 0; i < randomNumber.size(); i++)
+	string result("");
+	for (int i = 0; i < random_number.size(); i++)
 	{
-		index = randomNumber.find_first_of(input.at(i));
-		found++;
+		for (int x = 0; x < input.size(); x++)
+		{
+			if(input.at(i) == random_number.at(x))
+			{
+				if (i == x) {
+					result += 'F';
+				}
+				else {
+					result += 'P';
+				}
+			}
+		}
 	}
 
-	//Returnig N if none of the digits are containts in the random number
-	if (found = 0)
-		return 'N';
-    
+	return result;
 
-	char char1 = randomNumber.at(found);
-	char char2 = input.at(found);
-
-	
-	if (char1 == char2)
-		return 'F';
-
-	
-	if (char1 != char2)
-		return 'P';
 }
 
